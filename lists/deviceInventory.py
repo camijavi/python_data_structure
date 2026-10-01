@@ -1,9 +1,3 @@
-# Tu misión: Crea una lista con al menos 8 dispositivos. 
-# Permite agregar un nuevo producto, modificar uno existente
-# y mostrar la lista final.
-
-
-
 def printInventoryTable(items):
     print(f"{'Id':<4} | {'productName':<20} | {'Id':<4} | {'productName':<20}")
     print("-" * 55)
@@ -25,22 +19,35 @@ def deviceInventory():
 
     printInventoryTable(stock)
 
-    newProduct = input("> Ingrese un nuevo producto: ")
+    while True:
+        newProduct = input("> Ingrese un nuevo producto: ").strip()
+        if newProduct:
+            break
+        print("Error: El nombre del producto no puede estar vacío. Intente nuevamente.\n")
 
     stock.append(newProduct)
 
     printInventoryTable(stock)
 
-    editStock = int(input("> Ingrese el 'id' del producto que desea modificar: "))
+    while True:
+        try:
+            editStock = int(input("> Ingrese el 'id' del producto que desea modificar: "))
+            if 1 <= editStock <= len(stock):
+                break
+            print(f"Error: El 'id' debe estar entre 1 y {len(stock)}. Intente nuevamente.\n")
+        except ValueError:
+            print("Error: Ingrese un número válido. Intente nuevamente.\n")
 
-    if 1 <= editStock <= len(stock):
-        newProductName = input(f"> Ingrese el nuevo nombre para '{stock[editStock - 1]}': ")
-        stock[editStock - 1] = newProductName
+    while True:
+        newProductName = input(f"> Ingrese el nuevo nombre para '{stock[editStock - 1]}': ").strip()
+        if newProductName:
+            break
+        print("Error: El nombre del producto no puede estar vacío. Intente nuevamente.\n")
 
-        print("\n==== INVENTARIO ACTUALIZADO ===\n")
-        printInventoryTable(stock)
-    else:
-        print("Id no válido.")
+    stock[editStock - 1] = newProductName
+
+    print("\n==== INVENTARIO ACTUALIZADO ===\n")
+    printInventoryTable(stock)
 
 
 deviceInventory()

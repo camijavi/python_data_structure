@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from components import clearConsole, printError, printWarning, printSuccess, printTitle
+
+
 def printInventoryTable(items):
     print(f"{'Id':<4} | {'productName':<20} | {'Id':<4} | {'productName':<20}")
     print("-" * 55)
@@ -14,8 +22,9 @@ def printInventoryTable(items):
 
 
 def deviceInventory():
-    print("==== INVENTARIO DE DISPOSITIVOS ===\n")
-    stock = ["iPhone 18 ProMax", "iPad Air", "Apple Watch", "Airpords", "MacBook Pro", "MacBook Neo", "Mac Mini","AirPods Pro"]
+    clearConsole()
+    printTitle("Inventario de Dispositivos")
+    stock = ["iPhone 18 ProMax", "iPad Air", "Apple Watch", "Airpords", "MacBook Pro", "MacBook Neo", "Mac Mini", "AirPods Pro"]
 
     printInventoryTable(stock)
 
@@ -23,9 +32,10 @@ def deviceInventory():
         newProduct = input("> Ingrese un nuevo producto: ").strip()
         if newProduct:
             break
-        print("Error: El nombre del producto no puede estar vacío. Intente nuevamente.\n")
+        printError("El nombre del producto no puede estar vacío. Intente nuevamente.\n")
 
     stock.append(newProduct)
+    printSuccess(f"Producto '{newProduct}' agregado exitosamente.\n")
 
     printInventoryTable(stock)
 
@@ -34,19 +44,21 @@ def deviceInventory():
             editStock = int(input("> Ingrese el 'id' del producto que desea modificar: "))
             if 1 <= editStock <= len(stock):
                 break
-            print(f"Error: El 'id' debe estar entre 1 y {len(stock)}. Intente nuevamente.\n")
+            printWarning(f"El 'id' debe estar entre 1 y {len(stock)}. Intente nuevamente.\n")
         except ValueError:
-            print("Error: Ingrese un número válido. Intente nuevamente.\n")
+            printError("Ingrese un número válido. Intente nuevamente.\n")
 
     while True:
         newProductName = input(f"> Ingrese el nuevo nombre para '{stock[editStock - 1]}': ").strip()
         if newProductName:
             break
-        print("Error: El nombre del producto no puede estar vacío. Intente nuevamente.\n")
+        printError("El nombre del producto no puede estar vacío. Intente nuevamente.\n")
 
+    oldProduct = stock[editStock - 1]
     stock[editStock - 1] = newProductName
+    printSuccess(f"Producto '{oldProduct}' actualizado a '{newProductName}' exitosamente.")
 
-    print("\n==== INVENTARIO ACTUALIZADO ===\n")
+    printTitle("Inventario Actualizado")
     printInventoryTable(stock)
 
 

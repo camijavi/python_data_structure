@@ -25,15 +25,22 @@ def deviceInventory():
 
     printInventoryTable(stock)
 
-    newProduct = input("Ingrese un nuevo producto: ")
+    newProduct = input("> Ingrese un nuevo producto: ")
 
     stock.append(newProduct)
 
     printInventoryTable(stock)
 
-    editStock = int(input("Ingrese el 'id' del producto que desea modificar"))
-    
+    editStock = int(input("> Ingrese el 'id' del producto que desea modificar: "))
 
+    if 1 <= editStock <= len(stock):
+        newProductName = input(f"> Ingrese el nuevo nombre para '{stock[editStock - 1]}': ")
+        stock[editStock - 1] = newProductName
+
+        print("\n==== INVENTARIO ACTUALIZADO ===\n")
+        printInventoryTable(stock)
+    else:
+        print("Id no válido.")
 
 
 deviceInventory()

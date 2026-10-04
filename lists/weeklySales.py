@@ -37,4 +37,5 @@ def weeklySales():
     print(f"Día con mayores ventas: {sales.index(max(sales)) + 1}")
 
 
-weeklySales()
+if __name__ == "__main__":
+    weeklySales()
